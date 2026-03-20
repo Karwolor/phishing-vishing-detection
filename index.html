@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishing & Vishing Detection Tool</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-top">
+                <h1>🔒 Phishing & Vishing Detector</h1>
+                <button id="darkModeToggle" class="theme-toggle" title="Toggle dark mode">🌙</button>
+            </div>
+            <p>Advanced threat analysis with URL inspection, breach checking, and analytics</p>
+        </header>
+
+        <main>
+            <div class="tab-navigation">
+                <button class="tab-btn active" data-tab="analyzer">Email/SMS</button>
+                <button class="tab-btn" data-tab="vishing">Vishing/Calls</button>
+                <button class="tab-btn" data-tab="analytics">Analytics</button>
+                <button class="tab-btn" data-tab="advanced">Advanced</button>
+            </div>
+
+            <!-- ANALYZER TAB -->
+            <div id="analyzer-tab" class="tab-content active">
+                <div class="input-section">
+                    <label for="messageInput">Paste your message here:</label>
+                    <textarea 
+                        id="messageInput" 
+                        placeholder="Paste an email, SMS, or call transcript...
+                        
+Example: 'Hi, your bank account will be closed in 24 hours. Click here to verify your details: bit.ly/verify'"
+                        rows="8"></textarea>
+                    <button id="analyzeBtn" class="btn-primary">🔍 Analyze</button>
+                    <button id="clearBtn" class="btn-secondary">Clear</button>
+                </div>
+
+                <div id="resultSection" class="result-section hidden">
+                    <div class="result-card">
+                        <div id="classificationBox" class="classification-box">
+                            <h2>Classification</h2>
+                            <p id="classificationResult"></p>
+                            <small id="timestampResult"></small>
+                        </div>
+
+                        <div class="result-details">
+                            <h3>Analysis Summary</h3>
+                            <p id="reasonResult"></p>
+                        </div>
+
+                        <div id="flagsBox" class="flags-box">
+                            <h3>🚩 Red Flags Detected</h3>
+                            <ul id="flagsList"></ul>
+                        </div>
+
+                        <!-- URL Analysis Section -->
+                        <div id="urlAnalysisBox" class="url-analysis-box hidden">
+                            <h3>🔗 URL Analysis</h3>
+                            <div id="urlAnalysisList"></div>
+                        </div>
+
+                        <!-- Email Analysis Section -->
+                        <div id="emailAnalysisBox" class="email-analysis-box hidden">
+                            <h3>📧 Detected Email Addresses</h3>
+                            <ul id="emailList"></ul>
+                        </div>
+
+                        <div id="adviceBox" class="advice-box hidden">
+                            <h3>⚠️ What You Should Do</h3>
+                            <ul id="adviceList"></ul>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="info-section">
+                    <h2>How It Works</h2>
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <h4>🚨 Urgency Pressure</h4>
+                            <p>Phrases like "Act now", "Your account will be closed", "Limited time offer" to rush you into action</p>
+                        </div>
+                        <div class="info-card">
+                            <h4>🔐 Sensitive Info Request</h4>
+                            <p>Asking for passwords, OTPs, bank details, SSN, or personal data via email/phone</p>
+                        </div>
+                        <div class="info-card">
+                            <h4>🔗 Suspicious Links</h4>
+                            <p>Strange URLs, shortened links (bit.ly, tinyurl), unusual sender domains, or suspicious phone numbers</p>
+                        </div>
+                        <div class="info-card">
+                            <h4>📊 Classification System</h4>
+                            <p><strong>Safe:</strong> No red flags | <strong>Suspicious:</strong> 1 flag | <strong>Phishing/Vishing:</strong> 2+ flags</p>
+                        </div>
+                        <div class="info-card">
+                            <h4>🌐 URL Reputation</h4>
+                            <p>Analyzes URLs for suspicious patterns, IP addresses, and dangerous TLDs</p>
+                        </div>
+                        <div class="info-card">
+                            <h4>📈 Historical Tracking</h4>
+                            <p>Keeps track of all your analyses for pattern recognition and reporting</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- VISHING TAB -->
+            <div id="vishing-tab" class="tab-content hidden">
+                <div class="vishing-section">
+                    <h2>🎙️ Vishing Detection - Voice Phishing & Call Fraud</h2>
+
+                    <!-- Call Transcript Analysis -->
+                    <div class="input-section-vishing">
+                        <label for="callTranscript">Paste your call transcript here:</label>
+                        <textarea 
+                            id="callTranscript"
+                            placeholder="Paste a phone call transcript or what the caller said...
+
+Example Format:
+Caller: 'Hello, this is John from your bank security. We detected fraudulent activity on your account. We need to verify your information immediately.'
+You: 'What information?'
+Caller: 'Please confirm your card number and the CVV code on the back for verification purposes.'"
+                            rows="8"></textarea>
+                        <button id="analyzeVishingBtn" class="btn-primary">🔍 Analyze Call Transcript</button>
+                        <button id="clearVishingBtn" class="btn-secondary">Clear</button>
+                    </div>
+
+                    <!-- Vishing Results -->
+                    <div id="vishingResultsSection" class="result-section hidden">
+                        <div class="result-card">
+                            <div class="classification-box">
+                                <h3>Risk Assessment</h3>
+                                <p id="vishingRiskLevel"></p>
+                            </div>
+
+                            <div id="impersonationBox" class="flags-box hidden">
+                                <h3>🎭 Impersonation Tactics Detected</h3>
+                                <ul id="impersonationList"></ul>
+                            </div>
+
+                            <div id="vishingScriptBox" class="flags-box hidden">
+                                <h3>🎬 Detected Vishing Script Type</h3>
+                                <div id="scriptTypesList"></div>
+                            </div>
+
+                            <div id="requestsMadeBox" class="flags-box hidden">
+                                <h3>💬 Information Requests Detected</h3>
+                                <ul id="requestsList"></ul>
+                            </div>
+
+                            <div id="redFlagsBox" class="flags-box hidden">
+                                <h3>🚩 Red Flags Detected</h3>
+                                <ul id="redFlagsList"></ul>
+                            </div>
+
+                            <div id="safetyTipsBox" class="advice-box">
+                                <h3>🛡️ Vishing Safety Tips</h3>
+                                <ul id="safetyTipsList"></ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Phone Number Checker -->
+                    <div class="advanced-card" style="margin-top: 30px;">
+                        <h3>📱 Phone Number Validator</h3>
+                        <p>Check if a phone number appears suspicious or spoofed</p>
+                        <input type="text" id="phoneNumberInput" placeholder="Enter phone number (e.g., +1-555-123-4567 or (555) 123-4567)" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px; margin-bottom: 10px;">
+                        <button id="checkPhoneBtn" class="btn-primary">Validate Number</button>
+                        <div id="phoneValidationResults" class="hidden" style="margin-top: 15px;"></div>
+                    </div>
+
+                    <!-- Vishing Info Cards -->
+                    <section class="info-section" style="margin-top: 40px;">
+                        <h2>Common Vishing Techniques</h2>
+                        <div class="info-grid">
+                            <div class="info-card">
+                                <h4>🎭 Impersonation</h4>
+                                <p>Pretending to be bank, tech support, government agency, or utility company</p>
+                            </div>
+                            <div class="info-card">
+                                <h4>⚖️ Authority Abuse</h4>
+                                <p>Claiming legal authority, court orders, or threatening arrest/lawsuits</p>
+                            </div>
+                            <div class="info-card">
+                                <h4>😰 Fear Tactics</h4>
+                                <p>Creating panic about account closure, fraud, or legal consequences</p>
+                            </div>
+                            <div class="info-card">
+                                <h4>⏰ Artificial Urgency</h4>
+                                <p>"Act now or account will be closed" - preventing rational thinking</p>
+                            </div>
+                            <div class="info-card">
+                                <h4>🔒 Trust Building</h4>
+                                <p>Sounding professional, having correct information to build false trust</p>
+                            </div>
+                            <div class="info-card">
+                                <h4>🚫 Prevent Verification</h4>
+                                <p>"Don't call back, don't tell anyone, stay on the line" - blocking verification</p>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- ANALYTICS TAB -->
+            <div id="analytics-tab" class="tab-content hidden">
+                <div class="analytics-section">
+                    <h2>Threat Analysis Dashboard</h2>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h4>Total Analyzed</h4>
+                            <p class="stat-number" id="totalAnalyzed">0</p>
+                        </div>
+                        <div class="stat-card safe">
+                            <h4>Safe Messages</h4>
+                            <p class="stat-number" id="safeCount">0</p>
+                        </div>
+                        <div class="stat-card suspicious">
+                            <h4>Suspicious</h4>
+                            <p class="stat-number" id="suspiciousCount">0</p>
+                        </div>
+                        <div class="stat-card danger">
+                            <h4>Phishing/Vishing</h4>
+                            <p class="stat-number" id="phishingCount">0</p>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <h3>Threat Distribution</h3>
+                        <canvas id="threatChart" style="max-height: 300px;"></canvas>
+                    </div>
+
+                    <div class="history-container">
+                        <h3>Recent Analyses</h3>
+                        <div id="historyList" class="history-list">
+                            <p style="text-align: center; color: #999;">No analyses yet</p>
+                        </div>
+                        <button id="clearAnalyticsBtn" class="btn-secondary" style="margin-top: 15px;">Clear All Data</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ADVANCED TAB -->
+            <div id="advanced-tab" class="tab-content hidden">
+                <div class="advanced-section">
+                    <h2>Advanced Features</h2>
+                    
+                    <div class="advanced-card">
+                        <h3>📧 Email Header Analysis</h3>
+                        <p>Paste email headers to verify SPF, DKIM, and detect spoofing</p>
+                        <textarea id="headerInput" placeholder="Paste raw email headers here..." rows="6"></textarea>
+                        <button id="analyzeHeaderBtn" class="btn-primary" style="margin-top: 10px;">Analyze Headers</button>
+                        <div id="headerResults" class="hidden" style="margin-top: 15px;"></div>
+                    </div>
+
+                    <div class="advanced-card">
+                        <h3>🔗 URL Reputation Check</h3>
+                        <p>Enter a URL to check its reputation and security risks</p>
+                        <input type="text" id="urlInput" placeholder="Enter URL (e.g., https://example.com)" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px; margin-bottom: 10px;">
+                        <button id="checkUrlBtn" class="btn-primary">Check URL</button>
+                        <div id="urlReputationResults" class="hidden" style="margin-top: 15px;"></div>
+                    </div>
+
+                    <div class="advanced-card">
+                        <h3>📬 Breach Database Check</h3>
+                        <p>Check if your email has been compromised in known data breaches</p>
+                        <input type="email" id="breachEmail" placeholder="Enter your email address" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px; margin-bottom: 10px;">
+                        <button id="checkBreachBtn" class="btn-primary">Check Breach</button>
+                        <div id="breachResults" class="hidden" style="margin-top: 15px;"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>⚠️ This tool helps identify common phishing patterns. Always verify through official channels when in doubt.</p>
+            <p style="font-size: 0.9em; margin-top: 10px; opacity: 0.7;">Data is stored locally in your browser for privacy</p>
+        </footer>
+    </div>
+
+    <script src="detector.js"></script>
+</body>
+</html>
