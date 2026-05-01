@@ -1,0 +1,16 @@
+{
+  "name": "phishing-vishing-detection",
+  "version": "1.0.0",
+  "description": "Phishing and vishing detection front-end application deployed with Node/Express.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.4",
+    "express-rate-limit": "^7.0.1",
+    "helmet": "^7.0.0"
+  },
+  "license": "MIT"
+}

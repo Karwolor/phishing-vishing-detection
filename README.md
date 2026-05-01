@@ -22,7 +22,6 @@ A comprehensive machine learning-based system for detecting phishing emails, SMS
 
 ### Prerequisites
 - Node.js and npm
-- Python 3.8+
 - Git
 
 ### Installation
@@ -36,13 +35,32 @@ cd phishing-vishing-detection
 2. Install dependencies:
 ```bash
 npm install
-pip install -r requirements.txt
 ```
 
-3. Start the application:
+3. Start the application locally:
 ```bash
 npm start
 ```
+
+4. Open a browser and visit:
+```bash
+http://localhost:3000
+```
+
+## Deploying to Render
+
+This repository is ready for Render deployment using a Node web service.
+
+1. Push your changes to GitHub:
+```bash
+git add .
+git commit -m "Prepare repo for Render deployment"
+git push origin main
+```
+
+2. In Render, create a new service from your GitHub repo.
+3. Render will use `npm install` and `npm start` automatically.
+4. After deployment, Render provides a live public URL for your app.
 
 ## Usage
 
